@@ -20,6 +20,7 @@ phases:
   post_build:
     commands:
       - echo Build completed on $DATE
+      - echo pipeline test 
       - git clone https://github.com/lim-jeongmin/cicd-argo-test.git \
         && cd cicd-argo-test \
         && sed "s|image: .*|image: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG$DATE|" team-test.yaml > tmpfile && mv tmpfile team-test.yaml \
