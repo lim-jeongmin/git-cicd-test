@@ -1,6 +1,5 @@
-version: 0.2
-env:
-  shell: bash
+on: 0.2
+
 phases:
   pre_build:
     commands:
@@ -9,23 +8,13 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - DATE=$(date '+%Y%m%d')
       - echo Building the Docker image...          
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
-      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG$DATE
-      - echo Build completed on `date`
-      - echo Pushing the Docker image...
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG$DATE  
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG      
   post_build:
     commands:
-      - echo Build completed on $DATE 
-      - git clone https://github.com/lim-jeongmin/cicd-argo-test.git
-      - cd $OPS_REPO_NAME 
-      - sed "s|image: .*|image: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG$DATE|" deployment.yaml > tmpfile && mv tmpfile deployment.yaml 
-      - git config user.email $GIT_USER_EMAIL \
-        && git config user.name $GIT_USER_NAME
-      - git remote set-url origin "https://${GITHUB_ACCESS_TOKEN}@github.com/${GITHUB_REPO_OWNER}/${OPS_REPO_NAME}.git"
-      - git add .
-      - git commit -m "update image tag $DATE" 
-      - git push  
-      - echo "code pushed"
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+			- cd testfile
+			- ./test.sh
