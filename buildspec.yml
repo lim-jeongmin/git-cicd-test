@@ -5,7 +5,7 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
-			- git config --global credential.helper '!aws codecommit credential-helper $@' \
+      - git config --global credential.helper '!aws codecommit credential-helper $@' \
         && git config --global credential.UseHttpPath true
   build:
     commands:
@@ -24,7 +24,7 @@ phases:
       - git clone https://github.com/lim-jeongmin/cicd-argo-test.git
       - cd $OPS_REPO_NAME
       - sed "s|image: .*|image: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG$DATE|" team-test.yaml > tmpfile && mv tmpfile team-test.yaml
-			- git config --global user.email $GIT_USER_EMAIL \
+      - git config --global user.email $GIT_USER_EMAIL \
         && git config --global user.name $GIT_USER_NAME
       - git add .
       - git commit -m "update image tag $DATE"
