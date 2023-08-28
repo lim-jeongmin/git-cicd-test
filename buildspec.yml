@@ -23,12 +23,11 @@ phases:
         && git clone https://github.com/${GITHUB_REPO_OWNER}/${OPS_REPO_NAME}.git \
         && cd $OPS_REPO_NAME \
         && pwd \
-        && sed "s|image: .*|image: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG$DATE|" team-test.yaml > tmpfile 
-        && mv tmpfile team-test.yaml \
-        && git config user.email $GIT_USER_EMAIL \
-        && git config user.name $GIT_USER_NAME \
-        && git remote set-url origin "https://${GITHUB_ACCESS_TOKEN}@github.com/${GITHUB_REPO_OWNER}/${OPS_REPO_NAME}.git" \
-        && git add . \
-        && git commit -m "update image tag $DATE" \
-        && git push \
-        && echo "code pushed"
+        && sed "s|image: .*|image: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG$DATE|" team-test.yaml > tmpfile && mv tmpfile team-test.yaml
+      - git config user.email $GIT_USER_EMAIL 
+      - git config user.name $GIT_USER_NAME 
+      - git remote set-url origin "https://${GITHUB_ACCESS_TOKEN}@github.com/${GITHUB_REPO_OWNER}/${OPS_REPO_NAME}.git"
+      - git add . 
+      - git commit -m "update image tag $DATE" 
+      - git push 
+      - echo "code pushed"
