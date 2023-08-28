@@ -22,7 +22,7 @@ phases:
         echo Build completed on $DATE \
         && git clone https://github.com/${GITHUB_REPO_OWNER}/${OPS_REPO_NAME}.git \
         && cd $OPS_REPO_NAME \
-        && sed "s|image: .*|image: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG$DATE|" deployment.yaml > tmpfile && mv tmpfile deployment.yaml \ 
+        && sed "s|image: .*|image: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG$DATE|" team-test.yaml > tmpfile && mv tmpfile team-test.yaml \ 
         && git config user.email $GIT_USER_EMAIL \
         && git config user.name $GIT_USER_NAME \
         && git remote set-url origin "https://${GITHUB_ACCESS_TOKEN}@github.com/${GITHUB_REPO_OWNER}/${OPS_REPO_NAME}.git" \
